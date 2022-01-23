@@ -18,14 +18,14 @@ class AdminUserTableSeeder extends Seeder
         $admin = [
             [
                 'name' => 'admin',
-                'email' => 'admin@gmail.com',
+                'email' => 'admin@laracamp.com',
                 'email_verified_at' => date('Y-m-d H:i:s', time()),
                 'password' => bcrypt('password'),
                 'is_admin' => true
             ],
             [
                 'name' => 'admin2',
-                'email' => 'admin2@gmail.com',
+                'email' => 'admin2@laracamp.com',
                 'email_verified_at' => date('Y-m-d H:i:s', time()),
                 'password' => bcrypt('password'),
                 'is_admin' => true

@@ -15,15 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('welcome');
-
-Route::get('login', function () {
-    return view('login');
-})->name('login');
-
-Route::get('register', function () {
-    return view('register');
-})->name('register');
+});
 
 Route::get('checkout', function () {
     return view('checkout');
@@ -32,3 +24,13 @@ Route::get('checkout', function () {
 Route::get('checkout-success', function () {
     return view('checkout-success');
 })->name('checkout-success');
+
+Route::get('welcome', function () {
+    return view('welcome');
+})->name('welcome');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__ . '/auth.php';
