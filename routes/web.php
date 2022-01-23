@@ -15,12 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('checkout/success', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
+Route::get('checkout/{camp:slug}', [CheckoutController::class, 'create'])->name('checkout.create');
+Route::post('checkout/{camp:slug}', [CheckoutController::class, 'store'])->name('checkout.store');
+
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('checkouts/success', [CheckoutController::class, 'checkoutSuccess'])->name('checkouts.success');
-Route::get('checkouts/{camp:slug}', [CheckoutController::class, 'create'])->name('checkouts.create');
 
 Route::get('welcome', function () {
     return view('welcome');

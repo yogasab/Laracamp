@@ -19,4 +19,10 @@ class Checkout extends Model
         'user_id',
         'camp_id'
     ];
+
+    // Set to current method while create new data
+    public function setExpiredAttribute($value)
+    {
+        $this->attributes['expired'] = date('Y-m-t', strtotime($value));
+    }
 }

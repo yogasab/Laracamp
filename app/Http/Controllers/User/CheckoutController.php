@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Camp;
 use App\Models\Checkout;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
@@ -26,7 +27,7 @@ class CheckoutController extends Controller
      */
     public function create(Camp $camp)
     {
-        return view('checkout')->with(['camp' => $camp]);
+        return view('checkout.create')->with(['camp' => $camp]);
     }
 
     /**
@@ -35,9 +36,22 @@ class CheckoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Camp $camp)
     {
-        //
+        $user = Auth::user();
+
+        $data = $request->all();
+        $data['user_id'] = $user->id;
+        $data['camp_id'] = $camp->id;
+
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->occupation = $data['occupation'];
+
+        $user->save();
+        Checkout::create($data);
+
+        return redirect(route('checkout.success'));
     }
 
     /**
@@ -87,6 +101,6 @@ class CheckoutController extends Controller
 
     public function checkoutSuccess()
     {
-        return view('checkout-success');
+        return view('checkout.success');
     }
 }
