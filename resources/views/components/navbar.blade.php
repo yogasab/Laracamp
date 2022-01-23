@@ -22,12 +22,26 @@
           <a class="nav-link" href="#">Business</a>
         </li>
       </ul>
-      <div class="d-flex">
-        @auth
-        <a href="{{ route('login') }}" class="btn btn-master btn-secondary me-3">
-          Haloo
+      @auth
+      <div class="d-flex user-logged">
+        <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+          Halo, {{ Auth::user()->name }}
+          <img src="{{ Auth::user()->avatar }}" class="user-photo rounded" alt="{{ Auth::user()->name }}">
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="right: 120px; left: auto;">
+            <li>
+              <a href="#" class="dropdown-item">My Dashboard</a>
+            </li>
+            <li>
+              <a href="#" class="dropdown-item" onclick="document.getElementById('logout-form').submit()">Logout</a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              </form>
+            </li>
+          </ul>
         </a>
-        @endauth
+      </div>
+      @else
+      <div class="d-flex">
         <a href="{{ route('login') }}" class="btn btn-master btn-secondary me-3">
           Login
         </a>
@@ -35,6 +49,7 @@
           Register
         </a>
       </div>
+      @endauth
     </div>
   </div>
 </nav>
