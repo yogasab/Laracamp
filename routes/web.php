@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,5 +33,9 @@ Route::get('welcome', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+// Socialite Google
+Route::get('login-google', [UserController::class, 'authGoogle'])->name('user.login.google');
+Route::get('auth/google/callback', [UserController::class, 'handleProviderCallback']);
 
 require __DIR__ . '/auth.php';

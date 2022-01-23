@@ -23,6 +23,11 @@
         </li>
       </ul>
       <div class="d-flex">
+        @auth
+        <a href="{{ route('login') }}" class="btn btn-master btn-secondary me-3">
+          Haloo
+        </a>
+        @endauth
         <a href="{{ route('login') }}" class="btn btn-master btn-secondary me-3">
           Login
         </a>
