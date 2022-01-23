@@ -23,12 +23,14 @@ class CampTableSeeder extends Seeder
                 'title' => $title,
                 'slug' => Str::slug($title),
                 'price' => random_int(100, 1000),
+                'description' => "Program {$title} ini akan mengajak Anda untuk belajar penuh mulai dari pengenalan dasar sampai membangun sebuah projek asli",
                 'created_at' => date('Y-m-d H:i:s', time()),
                 'updated_at' => date('Y-m-d H:i:s', time()),
             ], [
                 'title' => $title2,
                 'slug' => Str::slug($title2),
                 'price' => random_int(100, 1000),
+                'description' => "Program {$title2} ini akan mengajak Anda untuk belajar penuh mulai dari pengenalan dasar sampai membangun sebuah projek asli",
                 'created_at' => date('Y-m-d H:i:s', time()),
                 'updated_at' => date('Y-m-d H:i:s', time()),
             ]

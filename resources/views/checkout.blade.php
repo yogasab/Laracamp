@@ -19,18 +19,17 @@
                     <div class="col-lg-5 col-12">
                         <div class="item-bootcamp">
                             <img src="{{ asset('images/item_bootcamp.png') }}" alt="" class="cover">
-                            <h1 class="package">
-                                GILA BELAJAR
+                            <h1 class="package text-uppercase">
+                                {{ $camp->title }}
                             </h1>
                             <p class="description">
-                                Bootcamp ini akan mengajak Anda untuk belajar penuh mulai dari pengenalan dasar
-                                sampai membangun sebuah projek asli
+                                {{ $camp->description }}
                             </p>
                         </div>
                     </div>
                     <div class="col-lg-1 col-12"></div>
                     <div class="col-lg-6 col-12">
-                        <form action="{{ route('checkout-success') }}" class="basic-form">
+                        <form action="{{ route('checkouts.success') }}" class="basic-form">
                             <div class="mb-4">
                                 <label for="exampleInputEmail1" class="form-label">Full Name</label>
                                 <input type="text" class="form-control" id="exampleInputEmail1"

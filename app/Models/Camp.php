@@ -12,6 +12,7 @@ class Camp extends Model
 
     protected $fillable = [
         'title',
-        'price'
+        'price',
+        'description'
     ];
 }
