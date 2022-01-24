@@ -27,6 +27,10 @@ class CheckoutController extends Controller
      */
     public function create(Camp $camp)
     {
+        if ($camp->getIsRegistered()) {
+            return redirect(route('dashboard'))
+                ->with('error', "You already enroll {$camp->title} camp.");
+        }
         return view('checkout.create')->with(['camp' => $camp]);
     }
 

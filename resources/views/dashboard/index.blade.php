@@ -14,6 +14,11 @@
             </div>
         </div>
         <div class="row my-5">
+
+            @if ($message = Session::get('error'))
+            @include('components.alert')
+            @endif
+
             <table class="table">
                 <tbody>
                     @forelse ($checkouts as $checkout)
