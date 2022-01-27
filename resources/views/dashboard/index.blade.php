@@ -52,9 +52,9 @@
                         </td>
                     </tr>
                     @empty
-                    <tr>
+                    <tr class="font-weight-bold">
                         <td colspan="5">
-                            You have not enroll class yet
+                            <h3> You have not enroll class yet</h3>
                         </td>
                     </tr>
                     @endforelse
