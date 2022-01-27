@@ -43,7 +43,6 @@ class CheckoutController extends Controller
      */
     public function store(Store $request, Camp $camp)
     {
-        return $request->all();
         $user = Auth::user();
 
         $data = $request->all();

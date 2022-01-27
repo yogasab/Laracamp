@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\User\UserRegister;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
 
 class UserController extends Controller
@@ -30,7 +32,14 @@ class UserController extends Controller
         ];
 
         // Check if the user is already stored whether create the new one
-        $user = User::firstOrCreate(['email' => $data['email']], $data);
+        // $user = User::firstOrCreate(['email' => $data['email']], $data);
+        $user = User::whereEmail($data['email'])->first();
+        if (!$user) {
+            // Create new user
+            $user = User::create($data);
+            // Send the registration email 
+            Mail::to($user->email)->send(new UserRegister($user));
+        }
         // Set to cookies
         Auth::login($user, true);
 
