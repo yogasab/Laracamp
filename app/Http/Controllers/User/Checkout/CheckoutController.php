@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\User\Checkout;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\Checkout\Store;

@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Mail\User\UserRegister;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -43,6 +43,6 @@ class UserController extends Controller
         // Set to cookies
         Auth::login($user, true);
 
-        return redirect(route('welcome'));
+        return redirect(route('home'));
     }
 }

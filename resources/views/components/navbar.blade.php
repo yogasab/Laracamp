@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container">
-    <a class="navbar-brand" href="{{ route('welcome') }}">
+    <a class="navbar-brand" href="{{ route('home') }}">
       <img src="{{ asset('images/logo.png') }}" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -49,8 +49,8 @@
         <a href="{{ route('login') }}" class="btn btn-master btn-secondary me-3">
           Login
         </a>
-        <a href="{{ route('register') }}" class="btn btn-master btn-primary">
-          Register
+        <a href="{{ route('login.admin') }}" class="btn btn-master btn-primary">
+          Admin
         </a>
       </div>
       @endauth

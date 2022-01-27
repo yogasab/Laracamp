@@ -25,7 +25,7 @@
       <img src="{{ asset('images/ill_login_new.png') }}" alt="">
     </div>
     <div class="right">
-      <a href="{{ route('welcome') }}">
+      <a href="{{ route('home') }}">
         <img src="{{ asset('images/logo.png') }}" class="logo" alt="">
       </a>
       <h1 class="header-third">

@@ -1,20 +1,11 @@
 <?php
 
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\Checkout\CheckoutController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\User\Dashboard\DashboardController as UserDashboard;
+use App\Http\Controllers\Admin\Dashboard\DashboardController as AdminDashboard;
+use App\Http\Controllers\HomeController;
 
 Route::middleware(['auth'])->group(function () {
     // Checkout Routes
@@ -24,12 +15,18 @@ Route::middleware(['auth'])->group(function () {
         ->name('checkout.create');
     Route::post('checkout/{camp:slug}', [CheckoutController::class, 'store'])
         ->name('checkout.store');
-    // Dashboard Routes
-    Route::get('/dashboard', [DashboardController::class, 'index'])
+    // User Dashboard Routes
+    Route::get('/dashboard', [HomeController::class, 'index'])
         ->middleware(['auth'])
         ->name('dashboard');
-    Route::get('dashboard/checkout/invoice/{checkout}', [CheckoutController::class, 'checkout'])
-        ->name('checkout.invoice');
+    // Admin Dashboard Routes
+    Route::prefix('user/dashboard')->namespace('User')->name('user.')->group(function () {
+        Route::get('/', [UserDashboard::class, 'index'])->name('dashboard');
+    });
+    // Admin Dashboard Routes
+    Route::prefix('admin/dashboard')->namespace('Admin')->name('admin.')->group(function () {
+        Route::get('/', [AdminDashboard::class, 'index'])->name('dashboard');
+    });
 });
 
 // Socialite Google
@@ -38,10 +35,6 @@ Route::get('auth/google/callback', [UserController::class, 'handleProviderCallba
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-Route::get('welcome', function () {
-    return view('welcome');
-})->name('welcome');
+})->name('home');
 
 require __DIR__ . '/auth.php';

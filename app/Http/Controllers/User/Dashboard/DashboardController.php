@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\User\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Checkout;
@@ -12,7 +12,7 @@ class DashboardController extends Controller
     public function index()
     {
         $checkouts = Checkout::with(['camp'])->whereUserId(Auth::id())->get();
-        return view('dashboard.index')->with([
+        return view('user.dashboard')->with([
             'checkouts' => $checkouts
         ]);
     }
