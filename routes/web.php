@@ -16,10 +16,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware(['auth'])->group(function () {
+    // Checkout Routes
+    Route::get('checkout/success', [CheckoutController::class, 'checkoutSuccess'])
+        ->name('checkout.success');
+    Route::get('checkout/{camp:slug}', [CheckoutController::class, 'create'])
+        ->name('checkout.create');
+    Route::post('checkout/{camp:slug}', [CheckoutController::class, 'store'])
+        ->name('checkout.store');
+    // Dashboard Routes
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->middleware(['auth'])
+        ->name('dashboard');
+    Route::get('dashboard/checkout/invoice/{checkout}', [CheckoutController::class, 'checkout'])
+        ->name('checkout.invoice');
+});
 
-Route::get('checkout/success', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
-Route::get('checkout/{camp:slug}', [CheckoutController::class, 'create'])->name('checkout.create');
-Route::post('checkout/{camp:slug}', [CheckoutController::class, 'store'])->name('checkout.store');
+// Socialite Google
+Route::get('login-google', [UserController::class, 'authGoogle'])->name('user.login.google');
+Route::get('auth/google/callback', [UserController::class, 'handleProviderCallback']);
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,13 +43,5 @@ Route::get('/', function () {
 Route::get('welcome', function () {
     return view('welcome');
 })->name('welcome');
-
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('dashboard');
-
-// Socialite Google
-Route::get('login-google', [UserController::class, 'authGoogle'])->name('user.login.google');
-Route::get('auth/google/callback', [UserController::class, 'handleProviderCallback']);
 
 require __DIR__ . '/auth.php';

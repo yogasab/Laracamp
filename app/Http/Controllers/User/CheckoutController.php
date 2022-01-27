@@ -4,10 +4,13 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\Checkout\Store;
+use App\Mail\Checkout\AfterCheckout;
 use App\Models\Camp;
 use App\Models\Checkout;
+use Egulias\EmailValidator\Exception\AtextAfterCFWS;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -54,7 +57,8 @@ class CheckoutController extends Controller
         $user->occupation = $data['occupation'];
 
         $user->save();
-        Checkout::create($data);
+        $checkout = Checkout::create($data);
+        Mail::to($user->email)->send(new AfterCheckout($checkout));
 
         return redirect(route('checkout.success'));
     }
@@ -107,5 +111,10 @@ class CheckoutController extends Controller
     public function checkoutSuccess()
     {
         return view('checkout.success');
+    }
+
+    public function checkout(Checkout $checkout)
+    {
+        return $checkout;
     }
 }
