@@ -10,21 +10,21 @@ use App\Http\Controllers\HomeController;
 Route::middleware(['auth'])->group(function () {
     // Checkout Routes
     Route::get('checkout/success', [CheckoutController::class, 'checkoutSuccess'])
-        ->name('checkout.success');
+        ->name('checkout.success')->middleware('ensureUserRole:user');
     Route::get('checkout/{camp:slug}', [CheckoutController::class, 'create'])
-        ->name('checkout.create');
+        ->name('checkout.create')->middleware('ensureUserRole:user');
     Route::post('checkout/{camp:slug}', [CheckoutController::class, 'store'])
-        ->name('checkout.store');
+        ->name('checkout.store')->middleware('ensureUserRole:user');
     // User Dashboard Routes
     Route::get('/dashboard', [HomeController::class, 'index'])
         ->middleware(['auth'])
         ->name('dashboard');
     // Admin Dashboard Routes
-    Route::prefix('user/dashboard')->namespace('User')->name('user.')->group(function () {
+    Route::prefix('user/dashboard')->namespace('User')->middleware('ensureUserRole:user')->name('user.')->group(function () {
         Route::get('/', [UserDashboard::class, 'index'])->name('dashboard');
     });
     // Admin Dashboard Routes
-    Route::prefix('admin/dashboard')->namespace('Admin')->name('admin.')->group(function () {
+    Route::prefix('admin/dashboard')->namespace('Admin')->middleware('ensureUserRole:admin')->name('admin.')->group(function () {
         Route::get('/', [AdminDashboard::class, 'index'])->name('dashboard');
     });
 });
