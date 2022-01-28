@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\Dashboard\DashboardController as UserDashboard;
 use App\Http\Controllers\Admin\Dashboard\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\Checkout\CheckoutController as AdminCheckout;
 use App\Http\Controllers\HomeController;
 
 Route::middleware(['auth'])->group(function () {
@@ -26,6 +27,9 @@ Route::middleware(['auth'])->group(function () {
     // Admin Dashboard Routes
     Route::prefix('admin/dashboard')->namespace('Admin')->middleware('ensureUserRole:admin')->name('admin.')->group(function () {
         Route::get('/', [AdminDashboard::class, 'index'])->name('dashboard');
+        // Admin Dashboard
+        Route::put('checkout/update-payment-status/{checkout}', [AdminCheckout::class, 'updatePaymentStatus'])
+            ->middleware('ensureUserRole:admin')->name('change.payment.status');
     });
 });
 

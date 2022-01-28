@@ -15,55 +15,47 @@
         </div>
         <div class="row my-5">
 
-            @if ($message = Session::get('error'))
             @include('components.alert')
-            @endif
 
             <table class="table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>User</th>
+                        <th>Camp</th>
+                        <th>Price</th>
+                        <th>Register Data</th>
+                        <th>Paid Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
                 <tbody>
                     @forelse ($checkouts as $checkout)
-                    <tr class="align-middle">
-                        <td width="18%">
-                            <img src="{{ asset('images/item_bootcamp.png') }}" height="120" alt="">
-                        </td>
-                        <td>
-                            <p class="">
-                                <strong>{{ $checkout->camp->title }}</strong>
-                            </p>
-                            <p>
-                                {{ $checkout->created_at->format('M d, Y') }}
-                            </p>
-                        </td>
-                        <td>
-                            <p class="font-weight-bolder">
-                                <strong> {{ $checkout->user->name }}
-                                </strong>
-                            </p>
-                            <p>
-                                <strong>Rp{{ number_format($checkout->camp->price) }}K
-                                </strong>
-                            </p>
-                        </td>
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $checkout->user->name }}</td>
+                        <td>{{ $checkout->camp->title }}</td>
+                        <td>Rp{{ number_format($checkout->camp->price) }}K</td>
+                        <td>{{ $checkout->created_at->format('M d Y') }}</td>
                         <td>
                             @if ($checkout->is_paid)
-                            <strong class="text-success">Payment Success</strong>
+                            <span class="badge bg-success">Success</span>
                             @else
-                            <strong class="text-warning">Waiting for Payment</strong>
+                            <span class="badge bg-warning">Waiting</span>
                             @endif
                         </td>
                         <td>
-                            <a href="https://wa.me/089129793791212?text=Hi, saya ingin berdiskusi tentang bootcamp {{ $checkout->title }}"
-                                class="btn btn-primary">
-                                Contact Support
-                            </a>
+                            @if (!$checkout->is_paid)
+                            <form action="{{ route('admin.change.payment.status', $checkout->id) }}" method="POST">
+                                @method('PUT')
+                                @csrf
+                                <button type="submit" class="btn btn-outline-success btn-sm">Set to Paid</button>
+                            </form>
+                            @endif
                         </td>
                     </tr>
                     @empty
-                    <tr class="font-weight-bold">
-                        <td colspan="5">
-                            <h3> You have not enroll class yet</h3>
-                        </td>
-                    </tr>
+
                     @endforelse
                 </tbody>
             </table>
